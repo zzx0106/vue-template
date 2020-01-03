@@ -1,0 +1,3 @@
+该文件夹为vue-router的中间件文件夹
+
+用于对beforeEach做拦截处理

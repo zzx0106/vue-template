@@ -1,0 +1,5 @@
+global的index在App.vue里面import引入即可
+
+global文件夹里面的组件被在vue.config.js中被全局注册
+
+component里面除了global的文件夹的组件以外都需要手动引入

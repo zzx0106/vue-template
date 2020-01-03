@@ -1,0 +1,5 @@
+routers文件中使用了一个middleware的文件
+
+实质作用是当做路由拦截器使用
+
+因为在js中beforeEach回调中如果写入了大量代码（例如登录态拦截，title设置，或者各种），不方便维护，所以对vue-router做了一层封装，提供一个interceptor方法，这样能让代码结构更加清晰易懂，而且便于维护。
