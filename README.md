@@ -4,6 +4,25 @@
 
 vue 全家桶、pwa、预渲染+SEO 优化、sentry 错误监控、vw vh 移动端适配+兼容、权限、webpack 优化
 
+```
+安装依赖
+npm i
+
+运行
+npm run dev
+
+打包
+npm run build
+
+检查打包日志
+npm run build:report
+
+输出webpack配置
+npm run config
+
+
+```
+
 #### 使用脚手架生成默认模板结构
 ```
 vue create hello-world

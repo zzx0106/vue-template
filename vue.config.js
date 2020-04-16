@@ -7,6 +7,7 @@ const Config = require('./src/config/config');
 const PrerenderSPAPlugin = require('prerender-spa-plugin');
 const Renderer = PrerenderSPAPlugin.PuppeteerRenderer;
 const isProduction = process.env.NODE_ENV === 'production';
+// vue inspect > config.js 生成配置到config.js 查看配置
 // 通过递归获取文件夹内所有文件路径
 function findSync(startPath) {
   let result = [];
@@ -124,6 +125,7 @@ module.exports = {
     },
   },
   // 离线缓存 pwa应用
+  // https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa
   pwa: {
     // api https://developers.google.cn/web/tools/workbox/
     workboxOptions: {
