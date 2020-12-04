@@ -84,12 +84,12 @@ mark,
 audio,
 video,
 input {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font-weight: normal;
-    vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font-weight: normal;
+  vertical-align: baseline;
 }
 
 /* HTML5 display-role reset for older browsers */
@@ -104,77 +104,129 @@ header,
 menu,
 nav,
 section {
-    display: block;
+  display: block;
 }
 
 body {
-    line-height: 1;
+  line-height: 1;
 }
 
 blockquote,
 q {
-    quotes: none;
+  quotes: none;
 }
 
 blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-    content: none;
+  content: none;
 }
 
 table {
-    border-collapse: collapse;
-    border-spacing: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 
 /* custom */
 
 a {
-    color: #7e8c8d;
-    text-decoration: none;
-    -webkit-backface-visibility: hidden;
+  color: #7e8c8d;
+  text-decoration: none;
+  -webkit-backface-visibility: hidden;
 }
 
 li {
-    list-style: none;
+  list-style: none;
 }
 
 ::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track-piece {
-    background-color: rgba(0, 0, 0, 0.2);
-    -webkit-border-radius: 6px;
+  background-color: rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb:vertical {
-    height: 5px;
-    background-color: rgba(125, 125, 125, 0.7);
-    -webkit-border-radius: 6px;
+  height: 5px;
+  background-color: rgba(125, 125, 125, 0.7);
+  -webkit-border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb:horizontal {
-    width: 5px;
-    background-color: rgba(125, 125, 125, 0.7);
-    -webkit-border-radius: 6px;
+  width: 5px;
+  background-color: rgba(125, 125, 125, 0.7);
+  -webkit-border-radius: 6px;
 }
 
 html,
 body {
-    width: 100%;
+  width: 100%;
 }
 
 body {
-    -webkit-text-size-adjust: none;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-text-size-adjust: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 // 为应对以下错误，如果该字段会影响正常使用，那么注释掉也不会有任何影响
-// Unable to preventDefault inside passive event listener due to target being treated as passive. 
+// Unable to preventDefault inside passive event listener due to target being treated as passive.
 // See https://www.chromestatus.com/features/5093566007214080
+// * {
+//     touch-action: pan-y;
+//   }
+
+/*设置IOS页面长按不可复制粘贴，但是IOS上出现input、textarea不能输入，因此将使用-webkit-user-select:auto;*/
 * {
-    touch-action: pan-y;
-  }
+  // -webkit-touch-callout: none; /*系统默认菜单被禁用*/
+  // -webkit-user-select: none; /*webkit浏览器*/
+  // -khtml-user-select: none; /*早期浏览器*/
+  // -moz-user-select: none; /*火狐*/
+  // -ms-user-select: none; /*IE10*/
+  // user-select: none;
+}
+input,
+textarea {
+  -webkit-user-select: auto; /*webkit浏览器*/
+  margin: 0px;
+  padding: 0px;
+  outline: none;
+}
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent; /* For some Androids */
+}
+
+input:disabled {
+  background: transparent;
+}
+// input[disabled] {
+//   color: #2a2a2aff;
+//   opacity: 1;
+// }
+
+input:disabled {
+  // color: #2a2a2a;
+  // -webkit-text-fill-color: #2a2a2a;
+  -webkit-opacity: 1; // ios下 默认是0.3
+  opacity: 1;
+}
+
+img[src=''],
+img:not([src]) {
+  opacity: 0;
+}
+.anchorBL {
+  // display: none;
+}
+// ios上传的弹窗问题
+img {
+  pointer-events: auto; // https://blog.csdn.net/qq_37600506/article/details/99487744
+  -webkit-touch-callout: none;
+}
+body > a[title='站长统计'] {
+  display: none;
+}

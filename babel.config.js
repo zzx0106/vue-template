@@ -1,8 +1,5 @@
 module.exports = {
-  presets: [
-    [
-      '@vue/app',
-      { useBuiltIns: 'usage' }, // 按需Polyfill https://cli.vuejs.org/zh/guide/browser-compatibility.html#browserslist
-    ],
-  ],
+  presets: ['@vue/cli-plugin-babel/preset'],
+  // 可选链操作
+  plugins: [['@babel/plugin-proposal-pipeline-operator', { proposal: 'minimal' }]],
 };

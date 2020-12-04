@@ -1,0 +1,52 @@
+{
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[less]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  // "[json]": {
+  //   "editor.defaultFormatter": "esbenp.prettier-vscode"
+  // },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode" // 这种就是html太长会折叠成column模式
+  },
+  "editor.tabSize": 2,
+  "prettier.printWidth": 140, // 超过最大值换行
+  "prettier.bracketSpacing": true,
+  "prettier.jsxBracketSameLine": true,
+  "prettier.trailingComma": "es5", //尽可能控制尾随逗号的输出。 有效选项： '无' - 无尾随逗号 ' es5' - 在ES5中有效的尾随逗号（对象，数组等） 'all' - 尾随逗号 尽可能（函数参数）
+  "prettier.tabWidth": 2, // 缩进字节数
+  "prettier.useTabs": false, // 缩进不使用tab，使用空格
+  "prettier.semi": true, // 句尾添加分号
+  "prettier.singleQuote": true, // 使用单引号代替双引号
+  "prettier.quoteProps": "as-needed", // 对象的 key 仅在必要时用引号
+  "prettier.arrowParens": "always", //  (x) => {} 箭头函数参数只有一个时是否要有小括号。avoid：省略括号
+  "prettier.endOfLine": "auto", // 结尾是 \n \r \n\r auto
+  "prettier.disableLanguages": ["json"],
+  "prettier.htmlWhitespaceSensitivity": "ignore",
+  "i18n-ally.localesPaths": ["src/i18n/lang", "src/locales"],
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.enabledParsers": ["js", "json"],
+  "vue-i18n.i18nPaths": "src\\i18n,src\\i18n\\lang",
+  "editor.fontFamily": "Menlo, Monaco, Consolas, 'Courier New', monospace",
+  "editor.fontSize": 17,
+  "editor.foldingStrategy": "indentation"
+}
+// 注意：prettier开发人员对vue貌似吧不友好，不支持jsxBracketSameLine属性
+// 使用大佬的pr     "prettier": "https://github.com/adamJLev/prettier#a0cd45b4cbea2039941f5cea0dccacf506b0fd2e",
+// issue地址：https://github.com/prettier/prettier/issues/5377#issuecomment-628722438
+// 20.6.26更新，adamJLev大佬上传了npm版本 prettier@npm:@adamjlev/prettier ，可以通过npm i prettier@npm:@adamjlev/prettier -D 或者 yarn add prettier@npm:@adamjlev/prettier -D 下载
+// 不能使用cnpm  建议使用 yarn

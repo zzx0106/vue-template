@@ -1,0 +1,92 @@
+{
+  // Place your school-official-website 工作区 snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and
+  // description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope
+  // is left empty or omitted, the snippet gets applied to all languages. The prefix is what is
+  // used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+  // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders.
+  // Placeholders with the same ids are connected.
+  // Example:
+  "vue page": {
+    "scope": "vue",
+    "prefix": "vue",
+    "body": [
+      "<template>",
+      "\t<div class=\"${1:my-page}\">",
+      "\t\t<!-- TODO -->",
+      "\t</div>",
+      "</template>",
+      "<script>",
+      "export default {",
+      "\tname: '$1', // name显示组件名，可以方便搜索",
+      "\tdata() {",
+      "\t\treturn {};",
+      "\t},",
+      "\tcomponents: {},",
+      "\tcomputed: {},",
+      "\tmounted() {},",
+      "\tmethods: {},",
+      "};",
+      "</script>",
+      "<style lang=\"scss\" scoped>",
+      ".$1 {",
+      "\twidth: 100%;",
+      "}",
+      "</style>"
+    ],
+    "description": "创建组件快捷方式"
+  },
+  "$t": {
+    "scope": "vue",
+    "prefix": "::v-deep",
+    "body": ["{{ $t('$1') }}"],
+    "description": "国际化"
+  },
+  "v-deep": {
+    "scope": "vue,scss,sass,css",
+    "prefix": "::v-deep",
+    "body": ["::v-deep "],
+    "description": "类似于>>> 或者/deep/ 只是新版本是这个"
+  },
+  "media set w": {
+    "scope": "vue,scss,sass,css",
+    "prefix": "mediaWidth",
+    "body": ["@include media($1) {", "\t$2", "}"],
+    "description": "L 填入对应高度"
+  },
+  "media set l": {
+    "scope": "vue,scss,sass,css",
+    "prefix": "medial",
+    "body": ["@include media(L) {", "\t$1", "}"],
+    "description": "L 1440px"
+  },
+  "media set lm": {
+    "scope": "vue,scss,sass,css",
+    "prefix": "medialm",
+    "body": ["@include media(LM) {", "\t$1", "}"],
+    "description": "LM 1000px"
+  },
+  "media set m": {
+    "scope": "vue,scss,sass,css",
+    "prefix": "mediam",
+    "body": ["@include media(M) {", "\t$1", "}"],
+    "description": "M 768px"
+  },
+  "media set sm": {
+    "scope": "vue,scss,sass,css",
+    "prefix": "mediasm",
+    "body": ["@include media(SM) {", "\t$1", "}"],
+    "description": "SM 545px"
+  },
+  "media set iphoneXS": {
+    "scope": "vue,scss,sass,css",
+    "prefix": "mediaiphonexs",
+    "body": ["@include media(XS) {", "\t$1", "}"],
+    "description": "iphoneXS 375px"
+  },
+  "media set s": {
+    "scope": "vue,scss,sass,css",
+    "prefix": "medias",
+    "body": ["@include media(S) {", "\t$1", "}"],
+    "description": "S 360px"
+  }
+}

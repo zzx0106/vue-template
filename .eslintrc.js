@@ -10,7 +10,9 @@ module.exports = {
   },
   extends: ['plugin:vue/essential'],
   parserOptions: {
-    parser: 'babel-eslint',
+    // parser: 'babel-eslint', // 使用vue-eslint-plugin使用babel-eslint解析器
+    parser: '@typescript-eslint/parser', // 同上，不过这个兼容可选链操作
+    sourceType: 'module',
   },
   overrides: [
     {
@@ -27,11 +29,11 @@ module.exports = {
     // (x) => {} 箭头函数参数只有一个时是否要有小括号。
     'arrow-parens': 'off',
     // for in 中必须有if判断 比如判断hasOwnProperty
-    'guard-for-in': 'error',
+    'guard-for-in': ['error'],
     // error; 结尾必须有分号
     semi: [2, 'always'],
-    // 禁止在函数的 ( 前面有空格。
-    'space-before-function-paren': ['error', 'never'],
+    // 禁止在函数的 ( 前面有空格。存在async () => 这种问题，所以干掉这个
+    'space-before-function-paren': 'off',
     // 当最后一个元素或属性与闭括号 ] 或 } 在 不同的行时，允许（但不要求）使用拖尾逗号；当在 同一行时，禁止使用拖尾逗号。
     'comma-dangle': ['error', 'only-multiline'],
     // 规定逗号后面必须添加空格
@@ -48,12 +50,13 @@ module.exports = {
     'max-len': 'off',
     // 字面量属性不严格使用""号
     'quote-props': ['error', 'as-needed'],
-    // 允许在空行使用空白符
-    'no-trailing-spaces': ['error', { skipBlankLines: true }],
+    // 允许在空行使用空白符\允许在注释块中使用空白符
+    'no-trailing-spaces': ['error', { skipBlankLines: true, ignoreComments: true }],
     // 允许使用常量表达式 if(true)
     'no-constant-condition': 'off',
-    // 使用单引号代替双引号
-    quotes: ['error', 'single'],
+    // 使用单引号代替双引号 | 允许字符串使用``
+    quotes: ['error', 'single', { allowTemplateLiterals: true }],
+    'no-unused-expressions': 'off',
     // 允许单行中不使用大括号 if(true) xxx
     curly: ['error', 'multi-line'],
     // 这禁止掉 空格报错检查
@@ -74,14 +77,23 @@ module.exports = {
     // 允许使用obj["a"]和obj.a的模式
     'dot-notation': ['off'],
     // vuelint文档 https://eslint.vuejs.org/rules/html-closing-bracket-newline.html
-    'vue/require-prop-types': ['off'],
-    'vue/html-closing-bracket-newline': [
+    'vue/no-parsing-error': [
       'error',
       {
-        // singleline: '',
-        multiline: 'never',
+        // 可以允许dom中使用符号
+        'invalid-first-character-of-tag-name': false,
       },
-    ],
+    ], // 允许在dom里面输入符号
+    'vue/require-prop-types': ['off'],
+    'vue/html-closing-bracket-newline': ['off'],
+    // 'vue/html-closing-bracket-newline': [
+    //   'error',
+    //   {
+    //     // singleline: '',
+    //     // multiline: 'never',
+    //     multiline: 'never',
+    //   },
+    // ],
     // {{}}里面不用空格
     'vue/mustache-interpolation-spacing': ['off'],
     'vue/singleline-html-element-content-newline': ['off'],

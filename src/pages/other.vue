@@ -24,7 +24,6 @@ export default {
 <style lang="scss" scoped>
 .other {
   height: 100vh;
-  background: $other-bg;
   h1 {
     font-family: 'Courier New', Courier, monospace;
     font-size: 40px;

@@ -20,4 +20,11 @@ img {
   width: 1px;
   background: white svg(square param(--color $color));
 }
-$other-bg: rgba(0, 0, 0, 0.1);
+@mixin maxLine($line: 2) {
+  word-break: break-word;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: $line;
+  -webkit-box-orient: vertical;
+}

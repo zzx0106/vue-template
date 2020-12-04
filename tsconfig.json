@@ -1,0 +1,30 @@
+{
+  "compileOnSave": false,
+  "buildOnSave": false,
+  "compilerOptions": {
+    "outDir": "build", // 指定输出目录
+    "module": "ESNext", // 指定使用模块: 'commonjs', 'amd', 'system', 'umd' or 'es2015'
+    "target": "es6", // 指定 ECMAScript 目标版本: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', or 'ESNEXT'
+    "jsx": "react", // 允许编译 javascript 文件
+    "moduleResolution": "node", // 选择模块解析策略
+    "allowSyntheticDefaultImports": true, // 允许从没有设置默认导出的模块中默认导入。这并不影响代码的输出，仅为了类型检查。
+    "esModuleInterop": true, // //可以使用es6的方式导入node.js的方法
+    "lib": [
+      "dom", //dom运行环境
+      "dom.iterable", //迭代器运行环境
+      "esnext" //es6转化成es5的环境
+    ],
+    "strict": true, //所有的语法都会进行严格的检查
+    "allowJs": true, // 是否允许在ts文件中引入js
+    "noUnusedLocals": true, // 有未使用的变量时，抛出错误
+    "resolveJsonModule": true, //是否允许把json文件当做模块进行解析
+    "baseUrl": "./",
+    "rootDir": "./",
+    "paths": {
+      // 如果新增paths 需要重启编辑器才行
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src/*", "typings/*"], // 需要编译的文件目录
+  "exclude": ["node_modules", "build", "public", "dist"] // 排除编译的文件目录
+}

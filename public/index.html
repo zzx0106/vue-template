@@ -1,32 +1,41 @@
 <!DOCTYPE html>
 <html lang="zh">
-    <head>
-        <meta http-equiv="Content-Type" Content="text/html;" charset="utf-8" />
-        <!-- 启用360浏览器的极速模式(webkit) -->
-        <meta name="renderer" content="webkit" />
-        <!-- 优先使用 IE 最新版本和 Chrome -->
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
-        <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no" />
-        <!-- 不让百度转码 -->
-        <meta http-equiv="Cache-Control" content="no-siteapp" />
-        <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
-        <!-- 使用CDN加速的CSS文件，配置在vue.config.js下 -->
-        <% for (var i in htmlWebpackPlugin.options.cdn&&htmlWebpackPlugin.options.cdn.css) { %>
-        <link href="<%= htmlWebpackPlugin.options.cdn.css[i] %>" rel="preload" as="style" />
-        <link href="<%= htmlWebpackPlugin.options.cdn.css[i] %>" rel="stylesheet" />
-        <% } %>
-        <title>vue-template</title>
-    </head>
-    <body>
-        <noscript>
-            <!-- <strong>We're sorry but vue-template doesn't work properly without JavaScript enabled. Please enable it to continue.</strong> -->
-        </noscript>
-        <div id="app"></div>
-        <!-- 使用CDN加速的JS文件，配置在vue.config.js下 -->
-        <% for (var i in htmlWebpackPlugin.options.cdn&&htmlWebpackPlugin.options.cdn.js) { %>
-        <script src="<%= htmlWebpackPlugin.options.cdn.js[i] %>"></script>
-        <% } %>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;" charset="utf-8" />
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+    <meta http-equiv="expires" content="0">
+    <!-- 启用360浏览器的极速模式(webkit) -->
+    <meta name="renderer" content="webkit" />
+    <!-- 优先使用 IE 最新版本和 Chrome -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <!-- uc强制竖屏 -->
+    <meta name="screen-orientation" content="portrait" />
+    <!-- QQ强制竖屏 -->
+    <meta name="x5-orientation" content="portrait" />
+    <!-- windows phone 点击无高光 -->
+    <meta name="msapplication-tap-highlight" content="no" />
+    <!-- 不让百度转码 -->
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+    <!-- 使用CDN加速的CSS文件，配置在vue.config.js下 -->
+    <% for (var i in htmlWebpackPlugin.options.cdn&&htmlWebpackPlugin.options.cdn.css) { %>
+    <link href="<%= htmlWebpackPlugin.options.cdn.css[i] %>" rel="preload" as="style" />
+    <link href="<%= htmlWebpackPlugin.options.cdn.css[i] %>" rel="stylesheet" />
+    <% } %>
+    <title>vue-template</title>
+  </head>
+  <body>
+    <noscript>
+      <!-- <strong>We're sorry but vue-template doesn't work properly without JavaScript enabled. Please enable it to continue.</strong> -->
+    </noscript>
+    <div id="app"></div>
+    <!-- 使用CDN加速的JS文件，配置在vue.config.js下 -->
+    <% for (var i in htmlWebpackPlugin.options.cdn&&htmlWebpackPlugin.options.cdn.js) { %>
+    <script src="<%= htmlWebpackPlugin.options.cdn.js[i] %>"></script>
+    <% } %>
 
-        <!-- built files will be auto injected -->
-    </body>
+    <!-- built files will be auto injected -->
+  </body>
 </html>

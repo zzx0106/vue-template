@@ -1,8 +1,10 @@
 # vue 模板
-
+[文档规范](./规范文档.MD)
 ### 该模板为参考模板，内容比较多，不建议直接用于正式环境，按需求摘取符合自己项目所需要的功能
 
 vue 全家桶、pwa、预渲染+SEO 优化、sentry 错误监控、vw vh 移动端适配+兼容、权限、webpack 优化
+
+v2版本 新增：去除keep-alive缓存、typeings配置、tsconfig配置(使vscode更友好)、通用适配的底部、图片懒加载、新增tools和inject方法、新增百度map引入功能、新增项目规范文档、新增可选链功能等等
 
 ```
 安装依赖
@@ -74,7 +76,7 @@ npm i postcss-flexbugs-fixes postcss-import postcss-preset-env postcss-px-to-vie
 ```
 ```
 ------ 其他插件 -------
-npm i axios fastclick vuex vue-router -S
+npm i axios vuex vue-router -S
 ```
 ```
 ------ 预渲染套餐 ------
