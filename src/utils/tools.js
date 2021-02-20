@@ -184,6 +184,22 @@ function jsonSort(jsonObj, isSort = true) {
   }
   return str.substr(0, str.length - 1);
 }
+/**
+ * 对象排序,升序
+ */
+function sortAsc(propertyName) {
+  return function (object1, object2) {
+    const value1 = object1[propertyName];
+    const value2 = object2[propertyName];
+    if (value2 < value1) {
+      return 1;
+    } else if (value2 > value1) {
+      return -1;
+    } else {
+      return 0;
+    }
+  };
+}
 // 精度计算
 function P() {
   /*
@@ -274,8 +290,8 @@ function P() {
   function subtract(a, b, digits) {
     return operation(a, b, 'subtract').toFixed(digits);
   }
-  function multiply(a, b) {
-    return operation(a, b, 'multiply');
+  function multiply(a, b, digits) {
+    return operation(a, b, 'multiply').toFixed(digits);
   }
   function divide(a, b, digits) {
     return operation(a, b, 'divide').toFixed(digits);
@@ -382,7 +398,7 @@ function getUrlParam(name, url) {
 function setNav(type, title = '', isHasBack = false) {
   console.log('set nav', location.host.indexOf('bgbasis.com') > -1);
   if (location.host.indexOf('bgbasis.com') > -1) {
-    location.href = `https://bridge.bgbasis.com?action=${type}&barTitle=${title}&hasBack=${isHasBack}`;
+    location.href = `https://xxxxx?action=${type}&barTitle=${title}&hasBack=${isHasBack}`;
   }
 }
 
@@ -394,7 +410,7 @@ function setNav(type, title = '', isHasBack = false) {
 function showPdf(url) {
   console.log('showPdf', location.host.indexOf('bgbasis.com') > -1);
   if (location.host.indexOf('bgbasis.com') > -1) {
-    location.href = `https://bridge.bgbasis.com?action=showPdf&url=${url}`;
+    location.href = `https://xxxxx?action=showPdf&url=${url}`;
   }
 }
 /**
@@ -405,7 +421,7 @@ function showPdf(url) {
 function showAttach(url) {
   console.log('showAttach', location.host.indexOf('bgbasis.com') > -1);
   if (location.host.indexOf('bgbasis.com') > -1) {
-    location.href = `https://bridge.bgbasis.com?action=attPreview&attUrl=${url}`;
+    location.href = `https://xxxx?action=attPreview&attUrl=${url}`;
   }
 }
 
@@ -416,7 +432,7 @@ function showAttach(url) {
  */
 function hideKeyboard() {
   if (location.host.indexOf('bgbasis.com') > -1) {
-    location.href = `https://bridge.bgbasis.com?action=unfocus`;
+    location.href = `https://xxxxx?action=unfocus`;
   }
 }
 
@@ -433,12 +449,19 @@ function createNavStructure(routers, rootPath = '') {
     let path = rootPath;
     // 如果传入的是''，那么就赋值当前路由地址，因为子路由没有/
     if (!path) {
-      path = `${route.path}`;
+      path = `/${route.path}`;
     } else {
-      path = `${rootPath}/${route.path}`; // 子路由没有/所以得加上
+      if (route.path !== '/') {
+        path = `${rootPath}/${route.path}`; // 子路由没有/所以得加上
+      }
     }
-    // _path存储没有拼接的路由，有利于作比较
-    const target = { path: path, _path: route.path, name: route?.meta?.nav_title ?? route.name };
+    const target = {
+      path: path,
+      _path: `/${route.path}`, // _path存储没有拼接的路由，有利于作比较
+      icon: route.path,
+      meta: route?.meta,
+      name: route?.meta?.title ?? route.name,
+    };
     if (children && children.length > 0) {
       target['children'] = createNavStructure(children, path);
     }
@@ -464,7 +487,7 @@ function getNavStructure(routers, catchRefresh = false) {
  * @param {Router} local 本地路由
  * @param {Array} remote 远程路由
  */
-function routeFilter(local, remote) {
+function routeFilterRemote(local, remote) {
   return remote.reduce((t, RRoute) => {
     // console.log('local', JSON.parse(JSON.stringify(local)));
     const LRoutes = local.filter((l) => l?.meta?.id === RRoute.id); // 过滤出id相同的路由
@@ -484,6 +507,25 @@ function routeFilter(local, remote) {
   }, []);
 }
 
+/**
+ * 过滤路由
+ * @param {Object} root 路由结构
+ * @param {Object} sysPms 权限字典
+ */
+function routeFilter(root, sysPms) {
+  return root.reduce((t, RRoute) => {
+    const pms = RRoute?.meta?.pms?.some((p) => sysPms[p]) ?? true; // 过滤出id相同的路由
+    // 是否有RRoute的mate然后如果没有就返回true如果有找pms如果有pms就判断权限 如果没有就直接抛出true
+    console.log('pms--->', pms, sysPms, JSON.parse(JSON.stringify(RRoute?.meta || { aa: '未知' })));
+    if (pms) {
+      if (RRoute.children) {
+        RRoute.children = routeFilter(RRoute.children, sysPms);
+      }
+      t.push(RRoute);
+    }
+    return t;
+  }, []);
+}
 //封装检测数据类型的函数
 function checkedType(data) {
   return Object.prototype.toString.call(data).slice(8, -1);
@@ -494,7 +536,7 @@ function checkedType(data) {
  */
 function deepClone(target) {
   let result,
-    targetType = checkedType(target);
+      targetType = checkedType(target);
   if (targetType == 'Object') {
     result = {};
   } else if (targetType == 'Array') {
@@ -559,9 +601,9 @@ function getSysLanguage() {
 function getBrowser() {
   const userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
   const isOpera = userAgent.indexOf('Opera') > -1; //判断是否Opera浏览器
-  // var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera; //判断是否IE浏览器
+  // let isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera; //判断是否IE浏览器
   const isIE = window.ActiveXObject || 'ActiveXObject' in window;
-  // var isEdge = userAgent.indexOf("Windows NT 6.1; Trident/7.0;") > -1 && !isIE; //判断是否IE的Edge浏览器
+  // let isEdge = userAgent.indexOf("Windows NT 6.1; Trident/7.0;") > -1 && !isIE; //判断是否IE的Edge浏览器
   const isEdge = userAgent.indexOf('Edge') > -1; //判断是否IE的Edge浏览器
   const isFF = userAgent.indexOf('Firefox') > -1; //判断是否Firefox浏览器
   const isSafari = userAgent.indexOf('Safari') > -1 && userAgent.indexOf('Chrome') == -1; //判断是否Safari浏览器
@@ -674,7 +716,7 @@ function timeToTime(start, end) {
     start++;
   }
   while (end > start) {
-    const h = `${start}`.addZero();
+    const h = `${start}`.addLeftZero();
     arr.push(`${h}:00`, `${h}:30`);
     start++;
   }
@@ -693,7 +735,149 @@ function dayToDay(num) {
   }
   return days;
 }
+/**
+ * 将权限mark fq_导航_一级页面_二级页面_三级页面转化成 {fq_导航: { 一级页面: { 二级页面: { 三级页面: {} } } } }
+ * @param {Array} list
+ * @return {Object}
+ */
+function formatePms(list) {
+  if (!list) list = [];
+  return list.reduce((obj, pms) => {
+    obj[pms.mark] = pms;
+    return obj;
+  }, {});
+}
+/**
+ * 将权限mark fq_导航_一级页面_二级页面_三级页面转化成 {fq_导航: { 一级页面: { 二级页面: { 三级页面: {} } } } }
+ * @param {Array} list
+ * @return {Object}
+ */
+// function formatePms(list) {
+//   return list.reduce((obj, { mark }) => {
+//     const p = mark.split('_'); // [fq, a, b, c]
+//     const navName = `${p.shift()}_${p.shift()}`;
+//     if (!obj[navName]) obj[navName] = {};
+//     let to = obj[navName]; // 指针
+//     while (p.length) {
+//       const child = p.shift();
+//       if (!to[child]) {
+//         to[child] = {};
+//       }
+//       to = to[child]; // 指针后移
+//     }
+//     return obj;
+//   }, {});
+// }
+/** 递归处理后台返回的部门信息 */
+function departMentSerachTree(bumenData, parent, isSerach) {
+  return bumenData.reduce((temp, item, index) => {
+    if (item.parent === parent) {
+      const children = departMentSerachTree(bumenData, bumenData[index].id, isSerach);
+      const data = {
+        label: item.name,
+        value: item.id,
+        key: item.id,
+        content: item,
+        isLeaf: !children.length, // 是否是文件
+        spread: !!item.parent, // 是否展开
+      };
+      if (children.length === 0) {
+        temp.push({ ...data });
+      } else {
+        temp.push({ ...data, children });
+      }
+    }
+    return temp;
+  }, []);
+}
+
+/**  获取36位不重复唯一ID （uuid） */
+function uuid() {
+  let chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split('');
+  let uuid = [],
+      i,
+      r;
+  // uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
+  uuid[14] = '4'; // bits 12-15 of the time_hi_and_version field to 0010
+  for (i = 0; i < 36; i++) {
+    if (!uuid[i]) {
+      r = 0 | (Math.random() * 16);
+      uuid[i] = chars[i == 19 ? (r & 0x3) | 0x8 : r];
+    }
+  }
+  uuid = uuid.join('');
+  return uuid;
+}
+/**
+ * 时间差值计算
+ * @param {Number} a 时间戳
+ * @param {Number} b 时间戳
+ */
+function timeDayGap(a, b) {
+  return Math.floor((a - b) / 86400000);
+}
+/**
+ * 计算两日期差  兼容谷歌，火狐浏览器
+ * @param time1  例如（2017-09-10）
+ * @param time2  例如（2017-09-14）
+ * @returns {string}
+ */
+function diy_time(time1, time2) {
+  let $time1 = Date.parse(new Date(time1));
+  let $time2 = Date.parse(new Date(time2));
+  let $time3 = Math.abs(parseInt(($time2 - $time1) / 1000 / 3600 / 24)); //两日期差天数
+  return $time3;
+}
+/**
+ * 字符串日期格式化成date
+ * @param {String} strDate 时间 yyyy-MM-dd
+ */
+function dateFormat(strDate = '') {
+  const date = strDate
+      .replace(/\d+(?=-[^-]+$)/, function (a) {
+        return parseInt(a, 10) - 1;
+      })
+      .match(/\d+/g);
+  return new Date(...date);
+}
+/**
+ * 给字符串日期添加指定天数
+ * @param {String} formatDate yyyy-MM-dd hh:mm:ss 格式的参数
+ * @param {Number} count 天数
+ */
+function addDay(formatDate, count) {
+  let dateStr;
+  let year, month, day;
+  let date = dateFormat(formatDate); // 字符串日期格式化成date
+  date.setDate(P().add(date.getDate(), count));
+  year = date.getFullYear();
+  month = date.getMonth() + 1;
+  day = date.getDate();
+  if (month.toString().length == 1) {
+    month = '0' + month;
+  }
+  if (day.toString().length == 1) {
+    day = '0' + day;
+  }
+  dateStr = year + '-' + month + '-' + day;
+  return dateStr;
+}
+/** 判断对象是否是promise对象 */
+function isPromise(obj) {
+  return (
+      !!obj && //有实际含义的变量才执行方法，变量null，undefined和''空串都为false
+      (typeof obj === 'object' || typeof obj === 'function') && // 初始promise 或 promise.then返回的
+      typeof obj.then === 'function'
+  );
+}
 export {
+  isPromise,
+  addDay,
+  dateFormat,
+  sortAsc,
+  uuid,
+  departMentSerachTree,
+  formatePms,
   timeToTime,
   dayToDay,
   touchController, // pc端实现移动端滑动页面的效果
@@ -726,4 +910,6 @@ export {
   routeFilter, // 路由过滤器
   deepClone, // 深克隆
   deepMerge, // 深合并
+  timeDayGap,
+  diy_time,
 };
